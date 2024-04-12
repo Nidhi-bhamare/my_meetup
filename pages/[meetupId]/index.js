@@ -47,14 +47,14 @@ export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    'mongodb+srv://Lalit:Lalit@12345@lalitxparesh.hzuuw.mongodb.net/MeetUpDatabase?retryWrites=true&w=majority'
+    process.env.MONGO_URL
   );
   const db = client.db();
 
   const meetupsCollection = db.collection('meetups');
 
   const selectedMeetup = await meetupsCollection.findOne({
-    _id: ObjectId(meetupId),
+    _id: new ObjectId(meetupId),
   });
 
   client.close();
